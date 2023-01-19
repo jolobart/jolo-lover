@@ -1,0 +1,109 @@
+{
+    "auth": [
+        {
+            "id": 1,
+            "username": "Jolobee",
+            "name": "Joseph Bartolome",
+            "email": "jb@gmail.com",
+            "password": "pass123"
+        }
+    ],
+    "accounts": [
+        {
+            "id": 1,
+            "name": "Joseph Bartolome",
+            "wallets": [
+                1,
+                2
+            ],
+            "transactions": [
+                {
+                    "id": 1,
+                    "userId": 1,
+                    "walletId": 1,
+                    "amount": 13,
+                    "category": 1,
+                    "notes": "BGC bus ticket fare.",
+                    "dateTime": "Jan 16"
+                },
+                {
+                    "id": 2,
+                    "userId": 1,
+                    "walletId": 2,
+                    "amount": 190,
+                    "category": 2,
+                    "notes": "Starbucks coffee.",
+                    "dateTime": "Jan 16"
+                }
+            ]
+        }
+    ],
+    "transactions": [
+        {
+            "id": 1,
+            "userId": 1,
+            "walletId": 1,
+            "amount": 13,
+            "category": 1,
+            "notes": "BGC bus ticket fare.",
+            "dateTime": "Jan 16"
+        },
+        {
+            "id": 2,
+            "userId": 1,
+            "walletId": 2,
+            "amount": 190,
+            "category": "Food and Beverage",
+            "notes": "Starbucks coffee.",
+            "dateTime": "Jan 16"
+        }
+    ],
+    "wallets": [
+        {
+            "id": 1,
+            "userId": 1,
+            "name": "Personal",
+            "balance": 487,
+            "currency": "PHP"
+        },
+        {
+            "id": 2,
+            "userId": 1,
+            "name": "Savings",
+            "balance": 810,
+            "currency": "PHP"
+        }
+    ],
+    "categories": [
+        {
+            "id": 1,
+            "name": "Transportation",
+            "type": "expense"
+        },
+        {
+            "id": 2,
+            "name": "Food & Beverage",
+            "type": "expense"
+        },
+        {
+            "id": 3,
+            "name": "Bills",
+            "type": "expense"
+        },
+        {
+            "id": 4,
+            "name": "Salary",
+            "type": "income"
+        },
+        {
+            "id": 5,
+            "name": "Gifts",
+            "type": "income"
+        },
+        {
+            "id": 6,
+            "name": "Selling",
+            "type": "income"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+.nav-tabs {
+    text-align: center;
+}
+
+.card-container {
+    min-height: 24rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .tab-label {
+        font-size: .6rem;
+    }
+}
+
+@media only screen and (max-width: 869px) {
+    .tab-label {
+        font-size: .764rem;
+    }
+}
+
+@media only screen and (max-width: 844px) {
+    .tab-label {
+        font-size: .66rem;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .tab-label {
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,45 @@
+<div class="shadow p-3 mb-5 bg-body rounded card card-container p-4 border-0">
+    <div class="row  mb-3">
+        <div class="col-6">
+            <h3>Transactions</h3>
+        </div>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-7 text-end">
+                    <h1>17</h1>
+                </div>
+                <div class="col-5">
+                    <div class="row">
+                        <div class="col-12 text-start">
+                            Tuesday
+                        </div>
+                        <div class="col-12 text-start">
+                            January 2023
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card list p-4 mb-3" type="button" *ngFor="let transaction of transactions">
+        <div class="row">
+            <div class="col-2 align-self-center text-center">
+                <svg height="100" width="100">
+                    <circle cx="35" cy="35" r="25" stroke-width="3" fill="grey" />
+                </svg>
+            </div>
+            <div class="col-6 p2 align-self-center">
+                <small class="fw-semibold">{{transaction.dateTime}}</small>
+                <h5 class="fw-bold">{{transaction.category}}</h5>
+                <h6 class="fw-normal">{{transaction.notes}}</h6>
+            </div>
+            <div *ngIf="transaction.id === 1" class="col-3 p2 align-self-center text-end">
+                <h5 class="text-danger">-{{transaction.amount}}.00</h5>
+            </div>
+            <div *ngIf="transaction.id === 2" class="col-3 p2 align-self-center text-end">
+                <h5 class="text-success">+{{transaction.amount}}.00</h5>
+            </div>
+        </div>
+    </div>
+</div>

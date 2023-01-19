@@ -1,0 +1,17 @@
+.btn-circle.btn-xl {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 60px;
+    text-align: center;
+    vertical-align: center;
+    border: .3rem solid rgb(255, 193, 7);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.float-btn-container {
+    position: fixed;
+    bottom: 40px;
+    right: 25px;
+    z-index: 999;
+    cursor: pointer;
+}
