@@ -1,27 +1,40 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Input, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { TransactionFormComponent } from 'src/app/transaction/transaction-form/transaction-form.component';
-import { COMPONENT_TYPES } from '../../constants/component-type.constant';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
+import { COMPONENT_TYPES } from '../../constants';
+import { ComponentType } from '../../enums';
 
 @Component({
   selector: 'app-modal-wrapper',
   templateUrl: './modal-wrapper.component.html',
-  styleUrls: ['./modal-wrapper.component.scss']
+  styleUrls: ['./modal-wrapper.component.scss'],
 })
 export class ModalWrapperComponent implements AfterViewInit {
-  @ViewChild("viewContainerRef", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-  @Input() componentName: string = '';
-  readonly componentMapping = COMPONENT_TYPES;
-  constructor(
-    private cdRef: ChangeDetectorRef
-  ) { }
+  @ViewChild('viewContainerRef', { read: ViewContainerRef })
+  viewContainerRef: ViewContainerRef;
+  @Input() componentName: ComponentType;
+
+  constructor(private cdRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    // this.addComponent(this.componentMapping[this.componentName]);
+    console.log(this.componentName);
+    this.addComponent(COMPONENT_TYPES[this.componentName]);
+    // this.addComponent(ListComponent);
   }
 
   addComponent = (componentClass: any): void => {
     // Creates a component dynamically inside the ng-template
     this.viewContainerRef.createComponent(componentClass);
     this.cdRef.detectChanges();
-  }
+  };
+
+  removeComponent = (): void => {
+    console.log('clicked');
+    this.viewContainerRef.clear();
+  };
 }

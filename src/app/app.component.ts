@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { Transaction } from './shared/models/transaction.model';
+import { ComponentType } from './shared/enums';
+import { Transaction } from './shared/models';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'expense-tracker-webapp';
-  componentName: string = "";
+  componentName: ComponentType = ComponentType.TransactionForm;
   transactionList: Transaction[] = [
     {
       id: 1,
@@ -17,7 +18,7 @@ export class AppComponent {
       amount: 13,
       category: 1,
       notes: 'BGC bus ticket fare.',
-      dateTime: ''
+      dateTime: '',
     },
     {
       id: 2,
@@ -26,7 +27,7 @@ export class AppComponent {
       amount: 190,
       category: 2,
       notes: 'Starbucks coffee.',
-      dateTime: ''
+      dateTime: '',
     },
     {
       id: 2,
@@ -35,11 +36,12 @@ export class AppComponent {
       amount: 500,
       category: 4,
       notes: 'Salary.',
-      dateTime: ''
-    }
-  ]
+      dateTime: '',
+    },
+  ];
 
-  setComponentName = (name: string): void => {
+  setComponentName = (name: ComponentType): void => {
+    console.log(name);
     this.componentName = name;
-  }
+  };
 }

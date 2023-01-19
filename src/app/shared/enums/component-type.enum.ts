@@ -1,3 +1,4 @@
 export enum ComponentType {
-    TransactionForm = 'transaction-form'
+  TransactionForm = 'transaction-form',
+  WalletList = 'wallet-list',
 }

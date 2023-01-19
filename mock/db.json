@@ -8,33 +8,13 @@
             "password": "pass123"
         }
     ],
-    "accounts": [
+    "users": [
         {
             "id": 1,
             "name": "Joseph Bartolome",
             "wallets": [
                 1,
                 2
-            ],
-            "transactions": [
-                {
-                    "id": 1,
-                    "userId": 1,
-                    "walletId": 1,
-                    "amount": 13,
-                    "category": 1,
-                    "notes": "BGC bus ticket fare.",
-                    "dateTime": "Jan 16"
-                },
-                {
-                    "id": 2,
-                    "userId": 1,
-                    "walletId": 2,
-                    "amount": 190,
-                    "category": 2,
-                    "notes": "Starbucks coffee.",
-                    "dateTime": "Jan 16"
-                }
             ]
         }
     ],

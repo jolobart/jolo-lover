@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { Transaction } from 'src/app/shared/models/transaction.model';
+import { Transaction } from 'src/app/shared/models';
 
 @Component({
   selector: 'transaction-form',
   templateUrl: './transaction-form.component.html',
-  styleUrls: ['./transaction-form.component.scss']
+  styleUrls: ['./transaction-form.component.scss'],
 })
 export class TransactionFormComponent {
   isLoading: boolean = false;
@@ -14,7 +14,6 @@ export class TransactionFormComponent {
     amount: 0,
     category: 0,
     notes: '',
-    dateTime: ''
-  }
-
+    dateTime: '',
+  };
 }
