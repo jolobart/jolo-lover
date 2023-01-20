@@ -4,9 +4,7 @@
     <div class="col-12 col-md-12 col-lg-6">
       <div class="row">
         <div class="col-12">
-          <wallet-details
-            (selectedWalletEvent)="setComponentName($event)"
-          ></wallet-details>
+          <wallet-details (selectedWalletEvent)="setComponentName($event)"></wallet-details>
         </div>
         <div class="col-12">
           <cashflow-statement></cashflow-statement>
@@ -17,10 +15,9 @@
       <transaction-list [transactions]="transactionList"></transaction-list>
     </div>
   </div>
-  <app-float-button
-    (selectedComponent)="setComponentName($event)"
-  ></app-float-button>
+  <app-float-button (selectedComponent)="setComponentName($event)"></app-float-button>
   <app-modal-wrapper [componentName]="componentName"></app-modal-wrapper>
   <!-- <app-modal></app-modal> -->
 </div>
 <!-- <app-footer></app-footer> -->
+<!-- <router-outlet></router-outlet> -->

@@ -1,16 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoginComponent } from '../auth/login/login.component';
-import { RegisterComponent } from '../auth/register/register.component';
-import { FooterComponent } from '../section/footer/footer.component';
-import { HeaderComponent } from '../section/header/header.component';
-import { CashflowStatementComponent } from '../transaction/cashflow-statement/cashflow-statement.component';
-import { ListComponent } from '../transaction/list/list.component';
-import { TransactionFormComponent } from '../transaction/transaction-form/transaction-form.component';
-import { WalletDetailsComponent } from '../wallets/wallet/wallet-details.component';
 
 import { FloatButtonComponent, ModalWrapperComponent } from './components';
+
+import {
+  CashflowStatementComponent,
+  FooterComponent,
+  HeaderComponent,
+  LoginComponent,
+  RegisterComponent,
+  TransactionFormComponent,
+  TransactionListComponent,
+  WalletDetailsComponent,
+  WalletListComponent
+} from '../components';
 
 export const components = [
   FloatButtonComponent,
@@ -18,7 +22,8 @@ export const components = [
   HeaderComponent,
   FooterComponent,
   TransactionFormComponent,
-  ListComponent,
+  TransactionListComponent,
+  WalletListComponent,
   LoginComponent,
   RegisterComponent,
   CashflowStatementComponent,
@@ -36,4 +41,4 @@ export const exportModules = [FormsModule];
   providers: [],
   exports: [...components, ...exportModules],
 })
-export class SharedModule {}
+export class SharedModule { }

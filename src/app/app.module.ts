@@ -8,19 +8,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared';
-import { TransactionService } from './shared/services';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, DashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     FormsModule,
     SharedModule,
-    HttpClientModule
+    HttpClientModule,
   ],
-  providers: [TransactionService],
+  providers: [],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
