@@ -12,7 +12,7 @@ export class TransactionFormComponent {
     userId: 0,
     walletId: 0,
     amount: 0,
-    category: 0,
+    categoryId: 0,
     notes: '',
     dateTime: '',
   };

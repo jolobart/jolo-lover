@@ -3,7 +3,7 @@ export interface Transaction {
     userId: number;
     walletId: number;
     amount: number;
-    category: number;
+    categoryId: number;
     notes: string;
     dateTime: string;
 }

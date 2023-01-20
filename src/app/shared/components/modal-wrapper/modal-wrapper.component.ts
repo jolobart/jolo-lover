@@ -22,9 +22,7 @@ export class ModalWrapperComponent implements AfterViewInit {
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngAfterViewInit(): void {
-    console.log(this.componentName);
     this.addComponent(COMPONENT_TYPES[this.componentName]);
-    // this.addComponent(ListComponent);
   }
 
   addComponent = (componentClass: any): void => {

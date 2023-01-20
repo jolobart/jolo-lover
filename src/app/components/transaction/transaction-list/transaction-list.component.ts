@@ -3,11 +3,11 @@ import { Transaction } from 'src/app/shared/models/transaction.model';
 
 @Component({
   selector: 'transaction-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  templateUrl: './transaction-list.component.html',
+  styleUrls: ['./transaction-list.component.scss'],
 })
-export class ListComponent {
+export class TransactionListComponent {
   @Input() transactions: Transaction[] = [];
 
-  openTransactionDetails = (): void => {};
+  openTransactionDetails = (): void => { };
 }
