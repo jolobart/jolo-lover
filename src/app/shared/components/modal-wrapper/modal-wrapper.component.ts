@@ -21,18 +21,20 @@ export class ModalWrapperComponent implements AfterViewInit {
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
-  ngAfterViewInit(): void {
-    this.addComponent(COMPONENT_TYPES[this.componentName]);
+  ngOnChanges(): void {
+    this.upsertComponent(COMPONENT_TYPES[this.componentName]);
   }
 
-  addComponent = (componentClass: any): void => {
-    // Creates a component dynamically inside the ng-template
-    this.viewContainerRef.createComponent(componentClass);
-    this.cdRef.detectChanges();
-  };
+  ngAfterViewInit(): void {
+    this.upsertComponent(COMPONENT_TYPES[this.componentName]);
+  }
 
-  removeComponent = (): void => {
-    console.log('clicked');
-    this.viewContainerRef.clear();
+  upsertComponent = (componentClass: any): void => {
+    // Creates a component dynamically inside the ng-template
+    if (this.viewContainerRef) {
+      this.viewContainerRef.clear();
+      this.viewContainerRef.createComponent(componentClass);
+      this.cdRef.detectChanges();
+    }
   };
 }

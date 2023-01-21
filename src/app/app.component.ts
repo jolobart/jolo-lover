@@ -13,22 +13,21 @@ export class AppComponent implements OnInit {
   componentName: ComponentType = ComponentType.TransactionForm;
   transactionList: Transaction[] = [];
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private transactionService: TransactionService) {}
 
   ngOnInit(): void {
     this.getAllTransaction();
   }
 
   getAllTransaction = (): void => {
-    this.transactionService.getAllTransactions()
+    this.transactionService
+      .getAllTransactions()
       .subscribe((transactionList) => {
-        console.log(transactionList);
         this.transactionList = transactionList;
       });
-  }
+  };
 
   setComponentName = (name: ComponentType): void => {
-    console.log(name);
     this.componentName = name;
   };
 }
