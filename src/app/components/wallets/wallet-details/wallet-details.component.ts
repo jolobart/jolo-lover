@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ModalTitle } from 'src/app/shared/constants/modal-title.constant';
 import { ComponentType } from 'src/app/shared/enums';
-import { Wallet } from 'src/app/shared/models';
+import { ModalWrapperDetails, Wallet } from 'src/app/shared/models';
 
 @Component({
   selector: 'wallet-details',
@@ -8,9 +9,9 @@ import { Wallet } from 'src/app/shared/models';
   styleUrls: ['./wallet-details.component.scss'],
 })
 export class WalletDetailsComponent {
-  @Output() selectedWalletEvent: EventEmitter<ComponentType> =
-    new EventEmitter<ComponentType>();
-
+  @Output() selectedWalletEvent: EventEmitter<ModalWrapperDetails> =
+    new EventEmitter<ModalWrapperDetails>();
+  modalWrapperDetails: ModalWrapperDetails;
   isVisible: boolean = true;
   selectedWallet: Wallet = {
     id: 1,
@@ -21,6 +22,10 @@ export class WalletDetailsComponent {
   };
 
   onClick = (): void => {
-    this.selectedWalletEvent.emit(ComponentType.WalletList);
+    this.modalWrapperDetails = {
+      title: ModalTitle.SelectWallet,
+      componentType: ComponentType.WalletList,
+    };
+    this.selectedWalletEvent.emit(this.modalWrapperDetails);
   };
 }

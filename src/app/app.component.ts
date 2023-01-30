@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ComponentType } from './shared/enums';
-import { Transaction } from './shared/models';
-import { TransactionService } from './shared/services';
 
 @Component({
   selector: 'app-root',
@@ -10,24 +7,8 @@ import { TransactionService } from './shared/services';
 })
 export class AppComponent implements OnInit {
   title = 'expense-tracker-webapp';
-  componentName: ComponentType = ComponentType.TransactionForm;
-  transactionList: Transaction[] = [];
 
-  constructor(private transactionService: TransactionService) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.getAllTransaction();
-  }
-
-  getAllTransaction = (): void => {
-    this.transactionService
-      .getAllTransactions()
-      .subscribe((transactionList) => {
-        this.transactionList = transactionList;
-      });
-  };
-
-  setComponentName = (name: ComponentType): void => {
-    this.componentName = name;
-  };
+  ngOnInit(): void {}
 }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ModalTitle } from '../../constants/modal-title.constant';
 import { ComponentType } from '../../enums';
+import { ModalWrapperDetails } from '../../models';
 
 @Component({
   selector: 'app-float-button',
@@ -7,10 +9,16 @@ import { ComponentType } from '../../enums';
   styleUrls: ['./float-button.component.scss'],
 })
 export class FloatButtonComponent {
-  @Output() selectedComponent: EventEmitter<ComponentType> =
-    new EventEmitter<ComponentType>();
+  @Output() selectedComponent: EventEmitter<ModalWrapperDetails> =
+    new EventEmitter<ModalWrapperDetails>();
+  modalWrapperDetails: ModalWrapperDetails;
 
   onClick = (): void => {
-    this.selectedComponent.emit(ComponentType.TransactionForm);
+    this.modalWrapperDetails = {
+      title: ModalTitle.AddTransaction,
+      componentType: ComponentType.TransactionForm,
+    };
+
+    this.selectedComponent.emit(this.modalWrapperDetails);
   };
 }
