@@ -7,7 +7,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { COMPONENT_TYPES } from '../../constants';
-import { ComponentType } from '../../enums';
+import { ModalWrapperDetails } from '../../models';
 
 @Component({
   selector: 'app-modal-wrapper',
@@ -17,16 +17,20 @@ import { ComponentType } from '../../enums';
 export class ModalWrapperComponent implements AfterViewInit {
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   viewContainerRef: ViewContainerRef;
-  @Input() componentName: ComponentType;
+  @Input() modalWrapperDetails: ModalWrapperDetails;
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
   ngOnChanges(): void {
-    this.upsertComponent(COMPONENT_TYPES[this.componentName]);
+    this.upsertComponent(
+      COMPONENT_TYPES[this.modalWrapperDetails.componentType]
+    );
   }
 
   ngAfterViewInit(): void {
-    this.upsertComponent(COMPONENT_TYPES[this.componentName]);
+    this.upsertComponent(
+      COMPONENT_TYPES[this.modalWrapperDetails.componentType]
+    );
   }
 
   upsertComponent = (componentClass: any): void => {
