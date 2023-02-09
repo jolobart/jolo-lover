@@ -1,1 +1,76 @@
-<p>register works!</p>
+<div class="body d-flex justify-content-center align-items-center">
+  <div class="shadow p-3 bg-body rounded card card-container p-4 border-0">
+    <div class="p-4 mb-3">
+      <div class="row">
+        <div class="row mb-3">
+          <div class="col-12 d-flex justify-content-center align-items-center">
+            <h2>Sign Up</h2>
+          </div>
+        </div>
+        <form #registerForm="ngForm" (ngSubmit)="signUp()">
+          <input
+            type="text"
+            name="firstName"
+            id="firstName"
+            class="form-control mb-4"
+            [(ngModel)]="register.firstName"
+            placeholder="First Name"
+            required
+          />
+          <input
+            type="text"
+            name="lasttName"
+            id="lasttName"
+            class="form-control mb-4"
+            [(ngModel)]="register.lastName"
+            placeholder="Last Name"
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="form-control mb-4"
+            [(ngModel)]="register.email"
+            placeholder="Email"
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control mb-4"
+            [(ngModel)]="register.password"
+            placeholder="Password"
+            required
+          />
+          <div class="row">
+            <div
+              class="col-md-12 d-flex align-items-center justify-content-center mb-3"
+            >
+              <!-- <button class="btn btn-danger">Cancel</button> -->
+              <button
+                type="submit"
+                class="btn btn-success w-100"
+                type="submit"
+                [disabled]="registerForm.invalid || isLoading"
+              >
+                <ng-container *ngIf="isLoading; else showButton">
+                  <app-spinner></app-spinner>
+                </ng-container>
+                <ng-template #showButton> Sign Up </ng-template>
+              </button>
+            </div>
+            <div
+              class="col-md-12 d-flex align-items-center justify-content-center"
+            >
+              <a [routerLink]="['/login']" class="login-link"
+                >Have an account? Let's sign in!</a
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

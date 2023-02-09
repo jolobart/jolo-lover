@@ -1,8 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
-import { FloatButtonComponent, ModalWrapperComponent } from './components';
+import {
+  FloatButtonComponent,
+  ModalWrapperComponent,
+  SpinnerComponent,
+} from './components';
 
 import {
   CashflowStatementComponent,
@@ -13,8 +18,10 @@ import {
   TransactionFormComponent,
   TransactionListComponent,
   WalletDetailsComponent,
-  WalletListComponent
+  WalletListComponent,
 } from '../components';
+
+import { AuthGuard } from './guards';
 
 export const components = [
   FloatButtonComponent,
@@ -28,17 +35,20 @@ export const components = [
   RegisterComponent,
   CashflowStatementComponent,
   WalletDetailsComponent,
+  SpinnerComponent,
 ];
 
-export const importModules = [CommonModule, FormsModule];
+export const providers = [AuthGuard];
+
+export const importModules = [CommonModule, FormsModule, RouterModule];
 
 export const exportModules = [FormsModule];
 
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, SpinnerComponent],
   entryComponents: [],
   imports: [...importModules],
-  providers: [],
+  providers: [...providers],
   exports: [...components, ...exportModules],
 })
-export class SharedModule { }
+export class SharedModule {}
