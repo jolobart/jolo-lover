@@ -26,12 +26,28 @@ export class AuthService {
     );
   }
 
-  login(request: Login): Observable<object> {
-    return this.http.post<User>(
+  login(request: Login): Observable<string> {
+    console.log(request);
+    return this.http.post<string>(
       `${this.baseUrl}/auth/login`,
       request,
       httpOptions
     );
   }
 
+  logout(): void {
+    localStorage.clear();
+  }
+
+  storeToken(token: any): void {
+    localStorage.setItem('bearerToken', token);
+  }
+
+  getToken(): string {
+    return localStorage.getItem('bearerToken') as string;
+  }
+
+  isUserAuthenticated(): boolean {
+    return !!this.getToken();
+  }
 }

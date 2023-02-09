@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, take, throwError } from 'rxjs';
+import { take } from 'rxjs';
 import { Register, User } from 'src/app/shared/models';
 import { AuthService } from 'src/app/shared/services';
 import { ToasterComponent } from '../../../shared/components/toaster/toaster.component';
@@ -28,14 +28,14 @@ export class RegisterComponent {
       .register(this.register)
       .pipe(take(1))
       .subscribe({
-        next: (res: User) => {
+        next: (response: User) => {
           this.showToaster('Registration Successful', 'success', 2500);
           setTimeout(() => {
             this.router.navigate(['/login']);
             this.isLoading = false;
           }, 2500);
         },
-        error: (errorMessage) => {
+        error: () => {
           this.showToaster('Registration Failed', 'error', 2500);
           this.setRegisterModelToEmpty();
           this.isLoading = false;
