@@ -34,6 +34,9 @@
       <div class="col d-flex justify-content-start align-items-center">
         <h5>My Wallets</h5>
         <button
+          (click)="viewWalletForm()"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
           type="button"
           class="btn btn-primary-outline btn-add-wallet border-0"
         >
@@ -43,7 +46,7 @@
       <div class="col d-flex justify-content-end">
         <div>
           <button
-            (click)="onClick()"
+            (click)="viewWalletList()"
             type="button"
             class="btn btn-primary-outline border-0"
             data-bs-toggle="modal"

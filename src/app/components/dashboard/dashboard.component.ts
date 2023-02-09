@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAllTransaction();
+    // this.getAllTransaction();
   }
 
   getAllTransaction = (): void => {

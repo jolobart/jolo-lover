@@ -13,9 +13,10 @@ import { FormsModule } from '@angular/forms';
 
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WalletFormComponent } from './components/wallets/wallet-form/wallet-form/wallet-form.component';
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent],
+  declarations: [AppComponent, DashboardComponent, WalletFormComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

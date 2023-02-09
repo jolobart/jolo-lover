@@ -1,0 +1,54 @@
+<div class="p-4 mb-3">
+  <div class="row">
+    <form #walletForm="ngForm" (ngSubmit)="upsertWallet()">
+      <input
+        type="text"
+        name="name"
+        id="name"
+        class="form-control mb-4"
+        placeholder="Wallet Name"
+        [(ngModel)]="wallet.name"
+        required
+      />
+
+      <select
+        name="currency"
+        id="currency"
+        class="form-select mb-4"
+        [(ngModel)]="wallet.currency"
+        required
+      >
+        <option value="" disabled selected>Select Currency</option>
+        <option value="PHP">PHP</option>
+        <option value="USD">USD</option>
+      </select>
+
+      <label>Initial Balance</label>
+      <input
+        type="number"
+        name="balance"
+        id="balance"
+        class="form-control mb-4"
+        [(ngModel)]="wallet.balance"
+        required
+      />
+
+      <div class="row">
+        <div class="col-md-12 d-flex align-items-center justify-content-end">
+          <!-- <button class="btn btn-danger">Cancel</button> -->
+          <button
+            type="submit"
+            class="btn btn-success w-100"
+            [disabled]="walletForm.invalid || isLoading"
+          >
+            <ng-container *ngIf="isLoading; else showButton">
+              <app-spinner></app-spinner>
+            </ng-container>
+            <ng-template #showButton>Save</ng-template>
+          </button>
+          <!-- <button type="submit" class="btn btn-success">Save</button> -->
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

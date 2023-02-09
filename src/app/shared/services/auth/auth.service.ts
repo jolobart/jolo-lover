@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../../environment';
 import { Login, Register, User } from '../../models';
 import { JwtHelperService } from '@auth0/angular-jwt';
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -15,10 +16,10 @@ const httpOptions = {
 })
 export class AuthService {
   baseUrl: string = environment.apiUrl;
-  private userPayload: User;
+  private userIdPayload: number;
 
   constructor(private http: HttpClient) {
-    this.userPayload = this.decodeToken();
+    this.userIdPayload = this.decodeToken();
   }
 
   register(request: Register): Observable<User> {
@@ -54,13 +55,13 @@ export class AuthService {
     return !!this.getToken();
   }
 
-  decodeToken(): User {
+  decodeToken(): number {
     const jwtHelper = new JwtHelperService();
     const token = this.getToken();
-    return jwtHelper.decodeToken(token) as User;
+    return jwtHelper.decodeToken(token).id as number;
   }
 
-  getUserFromToken(): User | null {
-    return this.userPayload ? this.userPayload : null;
+  getUserFromToken(): number | null {
+    return this.userIdPayload ? this.userIdPayload : null;
   }
 }

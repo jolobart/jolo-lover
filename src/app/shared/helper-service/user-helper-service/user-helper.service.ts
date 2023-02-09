@@ -1,24 +1,25 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserHelperService {
-  private userSubject$ = new BehaviorSubject<User>({
-    id: 0,
-    name: '',
-    email: '',
-  });
+  private userId$ = new BehaviorSubject<number>(0);
 
-  constructor() {}
+  constructor() {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      this.userId$.next(Number(storedUserId));
+    }
+  }
 
-  setUser = (user: User): void => {
-    this.userSubject$.next(user);
+  setUserId = (id: number): void => {
+    this.userId$.next(id);
+    localStorage.setItem('userId', id.toString());
   };
 
-  getUser = (): Observable<User> => {
-    return this.userSubject$.asObservable();
+  getUserId = (): Observable<number> => {
+    return this.userId$.asObservable();
   };
 }

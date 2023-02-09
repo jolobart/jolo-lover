@@ -21,10 +21,18 @@ export class WalletDetailsComponent {
     currency: 'PHP',
   };
 
-  onClick = (): void => {
+  viewWalletList = (): void => {
     this.modalWrapperDetails = {
       title: ModalTitle.SelectWallet,
       componentType: ComponentType.WalletList,
+    };
+    this.selectedWalletEvent.emit(this.modalWrapperDetails);
+  };
+
+  viewWalletForm = (): void => {
+    this.modalWrapperDetails = {
+      title: ModalTitle.AddWallet,
+      componentType: ComponentType.WalletForm,
     };
     this.selectedWalletEvent.emit(this.modalWrapperDetails);
   };
