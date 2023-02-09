@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environment';
 import { Login, Register, User } from '../../models';
-
+import { JwtHelperService } from '@auth0/angular-jwt';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -15,8 +15,11 @@ const httpOptions = {
 })
 export class AuthService {
   baseUrl: string = environment.apiUrl;
+  private userPayload: User;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.userPayload = this.decodeToken();
+  }
 
   register(request: Register): Observable<User> {
     return this.http.post<User>(
@@ -49,5 +52,15 @@ export class AuthService {
 
   isUserAuthenticated(): boolean {
     return !!this.getToken();
+  }
+
+  decodeToken(): User {
+    const jwtHelper = new JwtHelperService();
+    const token = this.getToken();
+    return jwtHelper.decodeToken(token) as User;
+  }
+
+  getUserFromToken(): User | null {
+    return this.userPayload ? this.userPayload : null;
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalTitle } from 'src/app/shared/constants/modal-title.constant';
 import { ComponentType } from 'src/app/shared/enums';
-import { ModalWrapperDetails, Transaction } from 'src/app/shared/models';
+import { UserHelperService } from 'src/app/shared/helper-service';
+import { ModalWrapperDetails, Transaction, User } from 'src/app/shared/models';
 import { TransactionService } from 'src/app/shared/services';
 
 @Component({
@@ -11,6 +12,7 @@ import { TransactionService } from 'src/app/shared/services';
 })
 export class DashboardComponent implements OnInit {
   title = 'expense-tracker-webapp';
+  user: User;
   componentName: ComponentType = ComponentType.TransactionForm;
   transactionList: Transaction[] = [];
   modalWrapperDetails: ModalWrapperDetails = {
@@ -18,7 +20,10 @@ export class DashboardComponent implements OnInit {
     componentType: ComponentType.Default,
   };
 
-  constructor(private transactionService: TransactionService) {}
+  constructor(
+    private userHelperService: UserHelperService,
+    private transactionService: TransactionService
+  ) {}
 
   ngOnInit(): void {
     this.getAllTransaction();
