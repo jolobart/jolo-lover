@@ -7,6 +7,7 @@ import {
   FloatButtonComponent,
   ModalWrapperComponent,
   SpinnerComponent,
+  ToasterComponent,
 } from './components';
 
 import {
@@ -36,6 +37,7 @@ export const components = [
   CashflowStatementComponent,
   WalletDetailsComponent,
   SpinnerComponent,
+  ToasterComponent,
 ];
 
 export const providers = [AuthGuard];
@@ -45,7 +47,7 @@ export const importModules = [CommonModule, FormsModule, RouterModule];
 export const exportModules = [FormsModule];
 
 @NgModule({
-  declarations: [...components, SpinnerComponent],
+  declarations: [...components],
   entryComponents: [],
   imports: [...importModules],
   providers: [...providers],
