@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
-import { ToasterComponent } from 'src/app/shared/components';
 import { Login } from 'src/app/shared/models';
 import { AuthService } from 'src/app/shared/services';
 
@@ -11,14 +11,17 @@ import { AuthService } from 'src/app/shared/services';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  @ViewChild('toaster', { static: false }) toaster: ToasterComponent;
   isLoading = false;
   loginModel: Login = {
     email: '',
     password: '',
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   signIn = (): void => {
     this.isLoading = true;
@@ -28,14 +31,13 @@ export class LoginComponent {
       .subscribe({
         next: (response: any) => {
           this.authService.storeToken(response.token);
-          this.showToaster('Login Successful', 'success', 2500);
-          setTimeout(() => {
-            this.router.navigate(['/dashboard']);
-            this.isLoading = false;
-          }, 2500);
+          this.toastr.success('Login success', 'Success!');
+
+          this.router.navigate(['/dashboard']);
+          this.isLoading = false;
         },
         error: () => {
-          this.showToaster('Login Failed', 'error', 2500);
+          this.toastr.error('Login unsuccessful', 'Error!');
           this.setLoginModelToEmpty();
           this.isLoading = false;
         },
@@ -48,11 +50,4 @@ export class LoginComponent {
       password: '',
     };
   };
-
-  showToaster(message: string, type: string, duration: number) {
-    this.toaster.message = message;
-    this.toaster.type = type;
-    this.toaster.duration = duration;
-    this.toaster.showToaster();
-  }
 }

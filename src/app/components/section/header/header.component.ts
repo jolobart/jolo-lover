@@ -1,6 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToasterComponent } from 'src/app/shared/components';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services';
 
 @Component({
@@ -9,25 +9,19 @@ import { AuthService } from 'src/app/shared/services';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @ViewChild('toaster', { static: false }) toaster: ToasterComponent;
   isLoading: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   signOut = (): void => {
     this.isLoading = true;
     this.authService.logout();
-    this.showToaster('Logout Successful', 'success', 2500);
-    setTimeout(() => {
-      this.router.navigate(['/login']);
-      this.isLoading = false;
-    }, 2500);
+    this.toastr.info('Logout successful');
+    this.router.navigate(['/login']);
+    this.isLoading = false;
   };
-
-  showToaster(message: string, type: string, duration: number) {
-    this.toaster.message = message;
-    this.toaster.type = type;
-    this.toaster.duration = duration;
-    this.toaster.showToaster();
-  }
 }

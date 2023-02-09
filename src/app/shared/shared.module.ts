@@ -7,7 +7,6 @@ import {
   FloatButtonComponent,
   ModalWrapperComponent,
   SpinnerComponent,
-  ToasterComponent,
 } from './components';
 
 import {
@@ -36,8 +35,7 @@ export const components = [
   RegisterComponent,
   CashflowStatementComponent,
   WalletDetailsComponent,
-  SpinnerComponent,
-  ToasterComponent,
+  SpinnerComponent
 ];
 
 export const providers = [AuthGuard];

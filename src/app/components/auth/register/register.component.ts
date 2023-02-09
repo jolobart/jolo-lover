@@ -1,9 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { Register, User } from 'src/app/shared/models';
 import { AuthService } from 'src/app/shared/services';
-import { ToasterComponent } from '../../../shared/components/toaster/toaster.component';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +11,6 @@ import { ToasterComponent } from '../../../shared/components/toaster/toaster.com
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  @ViewChild('toaster', { static: false }) toaster: ToasterComponent;
   isLoading: boolean = false;
   register: Register = {
     firstName: '',
@@ -20,7 +19,11 @@ export class RegisterComponent {
     password: '',
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   signUp = (): void => {
     this.isLoading = true;
@@ -29,14 +32,12 @@ export class RegisterComponent {
       .pipe(take(1))
       .subscribe({
         next: (response: User) => {
-          this.showToaster('Registration Successful', 'success', 2500);
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-            this.isLoading = false;
-          }, 2500);
+          this.toastr.success('Registration successful', 'Success!');
+          this.router.navigate(['/login']);
+          this.isLoading = false;
         },
         error: () => {
-          this.showToaster('Registration Failed', 'error', 2500);
+          this.toastr.error('Registration unsuccessful', 'Error!');
           this.setRegisterModelToEmpty();
           this.isLoading = false;
         },
@@ -51,11 +52,4 @@ export class RegisterComponent {
       password: '',
     };
   };
-
-  showToaster(message: string, type: string, duration: number) {
-    this.toaster.message = message;
-    this.toaster.type = type;
-    this.toaster.duration = duration;
-    this.toaster.showToaster();
-  }
 }

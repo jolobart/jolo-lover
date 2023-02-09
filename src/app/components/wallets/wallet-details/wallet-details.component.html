@@ -6,21 +6,15 @@
           <h3 *ngIf="isVisible">₱ {{ selectedWallet.balance }}.00</h3>
           <h3 *ngIf="!isVisible">*********</h3>
           <button
-            *ngIf="isVisible"
             (click)="isVisible = !isVisible"
-            class="btn btn-primary-outline"
+            class="btn btn-primary-outline border-0"
           >
             <h3>
-              <i class="bi bi-eye-fill btn-visible"></i>
-            </h3>
-          </button>
-          <button
-            *ngIf="!isVisible"
-            (click)="isVisible = !isVisible"
-            class="btn btn-primary-outline"
-          >
-            <h3>
-              <i class="bi bi-eye-slash-fill btn-visible"></i>
+              <i *ngIf="isVisible" class="bi bi-eye-fill btn-visible"></i>
+              <i
+                *ngIf="!isVisible"
+                class="bi bi-eye-slash-fill btn-visible"
+              ></i>
             </h3>
           </button>
         </div>
@@ -37,15 +31,21 @@
   </div>
   <div class="card p-4 mt-3 mb-3">
     <div class="row">
-      <div class="col d-flex justify-content-between">
-        <div>
-          <h5>My Wallets</h5>
-        </div>
+      <div class="col d-flex justify-content-start align-items-center">
+        <h5>My Wallets</h5>
+        <button
+          type="button"
+          class="btn btn-primary-outline btn-add-wallet border-0"
+        >
+          <i class="bi bi-plus-circle-fill btn-add"></i>
+        </button>
+      </div>
+      <div class="col d-flex justify-content-end">
         <div>
           <button
             (click)="onClick()"
             type="button"
-            class="btn btn-primary-outline"
+            class="btn btn-primary-outline border-0"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
           >
