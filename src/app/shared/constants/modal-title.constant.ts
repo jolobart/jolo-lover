@@ -3,5 +3,6 @@ export enum ModalTitle {
   AddWallet = 'Add wallet',
   TransactionDetails = 'Transaction details',
   AddTransaction = 'Add transaction',
+  UpdateWallet = 'Edit Wallet',
   Default = 'Add transaction',
 }

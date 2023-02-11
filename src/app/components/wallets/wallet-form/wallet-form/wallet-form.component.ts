@@ -4,6 +4,7 @@ import { take } from 'rxjs';
 import { UserHelperService } from 'src/app/shared/helper-service';
 import { Wallet } from 'src/app/shared/models';
 import { WalletService } from 'src/app/shared/services';
+import { ModalService } from 'src/app/shared/services/modal/modal.service';
 
 @Component({
   selector: 'app-wallet-form',
@@ -21,7 +22,8 @@ export class WalletFormComponent {
   constructor(
     private walletService: WalletService,
     private userHelperService: UserHelperService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private modalService: ModalService
   ) {
     this.userHelperService.getUserId().subscribe({
       next: (userId: number) => {
@@ -42,6 +44,7 @@ export class WalletFormComponent {
           this.toastr.success(`${response.name} has been added`, `Success`);
           this.setWalletModelToEmpty();
           this.isLoading = false;
+          this.modalService.closeModal();
         },
         error: () => {
           this.toastr.warning(`Error adding wallet`, `Error`);

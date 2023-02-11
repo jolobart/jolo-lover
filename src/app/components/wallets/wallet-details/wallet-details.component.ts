@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { ModalTitle } from 'src/app/shared/constants/modal-title.constant';
 import { ComponentType } from 'src/app/shared/enums';
+import { UserHelperService } from 'src/app/shared/helper-service';
+import { WalletHelperService } from 'src/app/shared/helper-service/wallet-helper-service/wallet-helper.service';
 import { ModalWrapperDetails, Wallet } from 'src/app/shared/models';
+import { WalletService } from 'src/app/shared/services';
+import { ModalService } from 'src/app/shared/services/modal/modal.service';
 
 @Component({
   selector: 'wallet-details',
@@ -21,6 +26,22 @@ export class WalletDetailsComponent {
     currency: 'PHP',
   };
 
+  constructor(
+    private walletService: WalletService,
+    private userHelperService: UserHelperService,
+    private toastr: ToastrService,
+    private walletHelperService: WalletHelperService,
+    private modalService: ModalService
+  ) {
+    this.walletHelperService.getWallet().subscribe({
+      next: (wallet: Wallet) => {
+        if (wallet) {
+          this.selectedWallet = wallet;
+        }
+      },
+    });
+  }
+
   viewWalletList = (): void => {
     this.modalWrapperDetails = {
       title: ModalTitle.SelectWallet,
@@ -35,5 +56,6 @@ export class WalletDetailsComponent {
       componentType: ComponentType.WalletForm,
     };
     this.selectedWalletEvent.emit(this.modalWrapperDetails);
+    this.modalService.closeModal();
   };
 }

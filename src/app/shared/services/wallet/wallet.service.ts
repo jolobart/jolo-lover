@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environment';
-import { Observable } from 'rxjs';
-import { SelectWalletRequest, Wallet } from '../../models';
+import { map, Observable } from 'rxjs';
+import { RemoveWalletRequest, SelectWalletRequest, Wallet } from '../../models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -40,5 +40,11 @@ export class WalletService {
       httpOptions
     );
   }
-  
+
+  removeWallet(id: number): Observable<Wallet> {
+    return this.http.delete<Wallet>(
+      `${this.baseUrl}/wallets/${id}`,
+      httpOptions
+    );
+  }
 }
