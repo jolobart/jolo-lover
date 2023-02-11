@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { take } from 'rxjs';
 import { ModalTitle } from 'src/app/shared/constants/modal-title.constant';
 import { ComponentType } from 'src/app/shared/enums';
 import { UserHelperService } from 'src/app/shared/helper-service';
 import { ModalWrapperDetails, Transaction, User } from 'src/app/shared/models';
-import { TransactionService } from 'src/app/shared/services';
+import { AuthService, TransactionService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,12 +23,33 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private userHelperService: UserHelperService,
+    private authService: AuthService,
     private transactionService: TransactionService
-  ) {}
+  ) {
+    this.userHelperService.getUserId().subscribe({
+      next: (userId: number) => {
+        if (userId) {
+          this.getUserById(userId);
+        }
+      },
+    });
+  }
 
   ngOnInit(): void {
     // this.getAllTransaction();
   }
+
+  getUserById = (id: number): void => {
+    this.authService
+      .getUserById(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: User) => {
+          this.user = response;
+          this.userHelperService.setUser(this.user);
+        },
+      });
+  };
 
   getAllTransaction = (): void => {
     this.transactionService

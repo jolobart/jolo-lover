@@ -31,12 +31,15 @@ export class AuthService {
   }
 
   login(request: Login): Observable<string> {
-    console.log(request);
     return this.http.post<string>(
       `${this.baseUrl}/auth/login`,
       request,
       httpOptions
     );
+  }
+
+  getUserById(id: number): Observable<User> {
+    return this.http.post<User>(`${this.baseUrl}/auth/${id}`, httpOptions);
   }
 
   logout(): void {

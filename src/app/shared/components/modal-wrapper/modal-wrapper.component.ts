@@ -3,13 +3,14 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
   Input,
-  OnInit,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { COMPONENT_TYPES } from '../../constants';
 import { ModalWrapperDetails } from '../../models';
+import { ModalControlService } from '../../services/modal-control/modal-control.service';
 import { ModalService } from '../../services/modal/modal.service';
 
 @Component({
@@ -17,20 +18,18 @@ import { ModalService } from '../../services/modal/modal.service';
   templateUrl: './modal-wrapper.component.html',
   styleUrls: ['./modal-wrapper.component.scss'],
 })
-export class ModalWrapperComponent implements AfterViewInit, OnInit {
-  @ViewChild('exampleModal') modal: ElementRef;
+export class ModalWrapperComponent implements AfterViewInit {
+  @ViewChild('exampleModal', { static: false }) modal: ElementRef;
   @ViewChild('viewContainerRef', { read: ViewContainerRef })
   viewContainerRef: ViewContainerRef;
   @Input() modalWrapperDetails: ModalWrapperDetails;
 
   constructor(
     private cdRef: ChangeDetectorRef,
-    private modalService: ModalService
+    private modalService: ModalService,
+    @Inject(ModalControlService)
+    private modalControlService: ModalControlService
   ) {
-    this.modalService.setModal(this.modal);
-  }
-  
-  ngOnInit(): void {
     this.modalService.setModal(this.modal);
   }
 
@@ -38,14 +37,12 @@ export class ModalWrapperComponent implements AfterViewInit, OnInit {
     this.upsertComponent(
       COMPONENT_TYPES[this.modalWrapperDetails.componentType]
     );
-    this.modalService.setModal(this.modal);
   }
 
   ngAfterViewInit(): void {
     this.upsertComponent(
       COMPONENT_TYPES[this.modalWrapperDetails.componentType]
     );
-    this.modalService.setModal(this.modal);
   }
 
   upsertComponent = (componentClass: any): void => {

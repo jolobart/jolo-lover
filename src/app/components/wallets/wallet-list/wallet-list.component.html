@@ -1,33 +1,20 @@
-<ul class="list-group">
-  <li class="list-group-item">
-    <input
-      class="form-check-input me-1"
-      type="radio"
-      name="listGroupRadio"
-      value=""
-      id="firstRadio"
-      checked
-    />
-    <label class="form-check-label" for="firstRadio">First radio</label>
-  </li>
-  <li class="list-group-item">
-    <input
-      class="form-check-input me-1"
-      type="radio"
-      name="listGroupRadio"
-      value=""
-      id="secondRadio"
-    />
-    <label class="form-check-label" for="secondRadio">Second radio</label>
-  </li>
-  <li class="list-group-item">
-    <input
-      class="form-check-input me-1"
-      type="radio"
-      name="listGroupRadio"
-      value=""
-      id="thirdRadio"
-    />
-    <label class="form-check-label" for="thirdRadio">Third radio</label>
-  </li>
-</ul>
+<form #form="ngForm" (ngSubmit)="selectWallet()">
+  <ul *ngFor="let wallet of wallets" class="list-group">
+    <li (click)="selectWalletId(wallet)" [ngClass]="{ selected: selectedWalletId === wallet.id }" class="list-group-item">
+      <input
+        style="display: none"
+        class="form-check-input me-1"
+        type="radio"
+        name="selectedWallet"
+        [value]="wallet"
+        [(ngModel)]="selectedWallet"
+        [checked]="selectedWalletId === wallet.id"
+      />
+      <label class="form-check-label" [for]="wallet.name">
+        {{ wallet.name }}
+      </label>
+      <i *ngIf="selectedWalletId === wallet.id" class="bi bi-check-lg"></i>
+    </li>
+  </ul>
+  <button type="submit">Submit</button>
+</form>

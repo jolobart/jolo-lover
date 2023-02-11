@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environment';
 import { Observable } from 'rxjs';
-import { Wallet } from '../../models';
+import { SelectWalletRequest, Wallet } from '../../models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -25,4 +25,20 @@ export class WalletService {
       httpOptions
     );
   }
+
+  getWalletList(id: number): Observable<Wallet[]> {
+    return this.http.get<Wallet[]>(
+      `${this.baseUrl}/wallets/${id}`,
+      httpOptions
+    );
+  }
+
+  selectWallet(request: SelectWalletRequest): Observable<Wallet> {
+    return this.http.put<Wallet>(
+      `${this.baseUrl}/wallets`,
+      request,
+      httpOptions
+    );
+  }
+  
 }

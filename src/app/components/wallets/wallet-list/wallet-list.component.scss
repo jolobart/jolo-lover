@@ -1,0 +1,17 @@
+.selected-icon {
+  display: inline-block;
+}
+
+.list-group-item:hover {
+  cursor: pointer;
+}
+
+.form-check-label:hover {
+  cursor: pointer;
+}
+
+.list-group-item.selected {
+  font-weight: bold;
+  color: rgb(25, 135, 84);
+  cursor: pointer;
+}

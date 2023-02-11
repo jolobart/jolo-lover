@@ -18,7 +18,9 @@ export class ModalService {
   }
 
   closeModal(): void {
-    this.modal.nativeElement.classList.remove('show');
-    document.body.classList.remove('modal-open');
+    if (this.modal) {
+      this.modal.nativeElement.classList.remove('show');
+      document.body.classList.remove('modal-open');
+    }
   }
 }

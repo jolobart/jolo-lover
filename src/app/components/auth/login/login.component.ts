@@ -32,9 +32,7 @@ export class LoginComponent {
       .pipe(take(1))
       .subscribe({
         next: (response: any) => {
-          console.log("TOKEN" , response.token);
           this.authService.storeToken(response.token);
-          console.log("DECODEDTOKEN" , this.authService.decodeToken());
           this.userHelperService.setUserId(this.authService.decodeToken());
           this.toastr.success('Login success', 'Success!');
           this.router.navigate(['/dashboard']);

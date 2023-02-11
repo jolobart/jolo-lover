@@ -35,7 +35,7 @@ export const components = [
   RegisterComponent,
   CashflowStatementComponent,
   WalletDetailsComponent,
-  SpinnerComponent
+  SpinnerComponent,
 ];
 
 export const providers = [AuthGuard];
