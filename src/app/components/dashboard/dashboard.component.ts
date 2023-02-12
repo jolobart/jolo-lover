@@ -3,8 +3,19 @@ import { take } from 'rxjs';
 import { ModalTitle } from 'src/app/shared/constants/modal-title.constant';
 import { ComponentType } from 'src/app/shared/enums';
 import { UserHelperService } from 'src/app/shared/helper-service';
-import { ModalWrapperDetails, Transaction, User } from 'src/app/shared/models';
-import { AuthService, TransactionService } from 'src/app/shared/services';
+import { WalletHelperService } from 'src/app/shared/helper-service/wallet-helper-service/wallet-helper.service';
+import {
+  GetWalletByIdRequest,
+  ModalWrapperDetails,
+  Transaction,
+  User,
+  Wallet,
+} from 'src/app/shared/models';
+import {
+  AuthService,
+  TransactionService,
+  WalletService,
+} from 'src/app/shared/services';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,16 +31,23 @@ export class DashboardComponent implements OnInit {
     title: ModalTitle.Default,
     componentType: ComponentType.Default,
   };
+  getWalletByIdRequest: GetWalletByIdRequest = {
+    id: 0,
+    userId: 0,
+  };
 
   constructor(
     private userHelperService: UserHelperService,
     private authService: AuthService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private walletService: WalletService,
+    private walletHelperService: WalletHelperService
   ) {
     this.userHelperService.getUserId().subscribe({
       next: (userId: number) => {
         if (userId) {
           this.getUserById(userId);
+          this.getWalletById();
         }
       },
     });
@@ -46,7 +64,20 @@ export class DashboardComponent implements OnInit {
       .subscribe({
         next: (response: User) => {
           this.user = response;
+          this.getWalletByIdRequest.id = this.user.selectedWalletId;
+          this.getWalletByIdRequest.userId = this.user.id;
           this.userHelperService.setUser(this.user);
+        },
+      });
+  };
+
+  getWalletById = () => {
+    this.walletService
+      .getWalletById(this.getWalletByIdRequest)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: Wallet) => {
+          this.walletHelperService.setWallet(response);
         },
       });
   };

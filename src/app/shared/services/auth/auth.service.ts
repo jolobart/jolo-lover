@@ -19,7 +19,9 @@ export class AuthService {
   private userIdPayload: number;
 
   constructor(private http: HttpClient) {
-    this.userIdPayload = this.decodeToken();
+    if (this.getToken()) {
+      this.userIdPayload = this.decodeToken();
+    }
   }
 
   register(request: Register): Observable<User> {
