@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { take } from 'rxjs';
 import { ModalTitle } from 'src/app/shared/constants/modal-title.constant';
 import { ComponentType } from 'src/app/shared/enums';
 import { UserHelperService } from 'src/app/shared/helper-service';
+import { TransactionHelperService } from 'src/app/shared/helper-service/transaction-helper-service/transaction-helper.service';
 import { WalletHelperService } from 'src/app/shared/helper-service/wallet-helper-service/wallet-helper.service';
 import {
   GetAllTransactionRequest,
@@ -43,6 +45,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private userHelperService: UserHelperService,
+    private transactionHelperService: TransactionHelperService,
     private authService: AuthService,
     private transactionService: TransactionService,
     private walletService: WalletService,
@@ -61,6 +64,15 @@ export class DashboardComponent implements OnInit {
       next: (wallet: Wallet) => {
         if (wallet) {
           this.getAllTransactionRequest.walletId = wallet.id as number;
+        }
+      },
+    });
+
+    this.transactionHelperService.getTransactions().subscribe({
+      next: (transactions: Transaction[]) => {
+        if (transactions) {
+          this.transactionList = transactions;
+          this.sortTransactionsToLatest();
         }
       },
     });
@@ -100,8 +112,19 @@ export class DashboardComponent implements OnInit {
     this.transactionService
       .getAllTransactions(this.getAllTransactionRequest)
       .subscribe((transactionList) => {
+        this.transactionHelperService.setTransactions(transactionList);
         this.transactionList = transactionList;
       });
+  };
+
+  sortTransactionsToLatest = (): void => {
+    if (this.transactionList.length) {
+      this.transactionList = this.transactionList.sort((a, b) => {
+        const momentA = moment(a.dateTime);
+        const momentB = moment(b.dateTime);
+        return momentB.diff(momentA);
+      });
+    }
   };
 
   setComponentName = (modalWrapperDetails: ModalWrapperDetails): void => {

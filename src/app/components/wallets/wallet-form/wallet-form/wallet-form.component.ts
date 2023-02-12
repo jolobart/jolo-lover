@@ -1,7 +1,8 @@
-import { Component, Inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { UserHelperService } from 'src/app/shared/helper-service';
+import { WalletHelperService } from 'src/app/shared/helper-service/wallet-helper-service/wallet-helper.service';
 import { Wallet } from 'src/app/shared/models';
 import { WalletService } from 'src/app/shared/services';
 import { ModalService } from 'src/app/shared/services/modal/modal.service';
@@ -18,6 +19,7 @@ export class WalletFormComponent {
     name: '',
     currency: '',
   };
+  updateSelectedWallet: boolean = false;
 
   constructor(
     private walletService: WalletService,
@@ -41,10 +43,13 @@ export class WalletFormComponent {
       .pipe(take(1))
       .subscribe({
         next: (response: Wallet) => {
-          this.toastr.success(`${response.name} has been added`, `Success`);
+          if (!this.updateSelectedWallet) {
+            this.toastr.success(`${response.name} has been added`, `Success`);
+          }
           this.setWalletModelToEmpty();
           this.isLoading = false;
           this.modalService.closeModal();
+          this.updateSelectedWallet = false;
         },
         error: () => {
           this.toastr.warning(`Error adding wallet`, `Error`);

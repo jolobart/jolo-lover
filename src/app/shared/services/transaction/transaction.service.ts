@@ -51,8 +51,10 @@ export class TransactionService {
     return this.http.get<Transaction[]>(url);
   }
 
-  deleteTransaction(transaction: Transaction): Observable<Transaction> {
-    const url = `${this.baseUrl}/${transaction.id}`;
-    return this.http.delete<Transaction>(url);
+  removeTransaction(id: number): Observable<Transaction> {
+    return this.http.delete<Transaction>(
+      `${this.baseUrl}/transactions/${id}`,
+      httpOptions
+    );
   }
 }
