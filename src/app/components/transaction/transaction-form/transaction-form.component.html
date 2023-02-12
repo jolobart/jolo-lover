@@ -10,22 +10,50 @@
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
+            required
           >
-            PHP
+            <label *ngIf="transaction.currency">{{
+              transaction.currency
+            }}</label>
+            <label *ngIf="!transaction.currency">Select Currency</label>
           </button>
           <ul
             ngbDropdownMenu
             class="dropdown-menu"
             aria-labelledby="dropdownBasic1"
           >
-            <li><a ngbDropdownItem class="dropdown-item" href="#">USD</a></li>
-            <li><a ngbDropdownItem class="dropdown-item" href="#">PHP</a></li>
+            <li (click)="selectCurrency('PHP')" class="p-1">
+              <div class="row">
+                <div
+                  class="col-md-6 d-flex align-items-center justify-content-start"
+                >
+                  <label class="form-check-label category-name" [for]="'PHP'">
+                    PHP
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li (click)="selectCurrency('USD')" class="p-1">
+              <div class="row">
+                <div
+                  class="col-md-6 d-flex align-items-center justify-content-start"
+                >
+                  <label class="form-check-label category-name" [for]="'USD'">
+                    USD
+                  </label>
+                </div>
+              </div>
+            </li>
           </ul>
           <input
             type="number"
             class="form-control"
             aria-label="Text input with dropdown button"
             placeholder="Amount"
+            name="amount"
+            id="amount"
+            [(ngModel)]="transaction.amount"
+            required
           />
         </div>
         <div class="mb-4">
@@ -45,7 +73,7 @@
                 </button>
                 <ul
                   ngbDropdownMenu
-                  class="dropdown-menu"
+                  class="dropdown-menu dropdown-category"
                   aria-labelledby="dropdownBasic2"
                 >
                   <li
@@ -109,17 +137,35 @@
               placeholder="Leave a comment here"
               id="floatingTextarea2"
               style="height: 100px"
+              name="notes"
+              id="notes"
+              [(ngModel)]="transaction.notes"
             ></textarea>
             <label for="floatingTextarea2">Notes</label>
           </div>
         </div>
         <div class="mb-4">
-          <input type="date" class="form-control" id="date" />
+          <input
+            type="datetime-local"
+            name="date"
+            id="date"
+            [(ngModel)]="transaction.dateTime"
+            class="form-control"
+            id="date"
+            required
+          />
         </div>
         <div class="row">
           <div class="col-md-12 d-flex align-items-center justify-content-end">
             <!-- <button class="btn btn-danger">Cancel</button> -->
-            <button type="submit" class="btn btn-success w-100">Save</button>
+            <button
+              (click)="upsertTransaction()"
+              [disabled]="transactionForm.invalid || !isCurrency || !category.id"
+              type="submit"
+              class="btn btn-success w-100"
+            >
+              Save
+            </button>
           </div>
         </div>
       </form>

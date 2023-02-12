@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'environment';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../models';
 
@@ -13,21 +14,16 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class TransactionService {
-  baseUrl: string = 'http://localhost:5000/transactions';
-  
+  baseUrl: string = environment.apiUrl;
+
   constructor(private http: HttpClient) {}
 
   upsertTransaction(transaction: Transaction): Observable<Transaction> {
-    if (!transaction.id) {
-      return this.http.post<Transaction>(
-        `${this.baseUrl}`,
-        transaction,
-        httpOptions
-      );
-    } else {
-      const url = `${this.baseUrl}/${transaction.id}`;
-      return this.http.put<Transaction>(url, transaction, httpOptions);
-    }
+    return this.http.post<Transaction>(
+      `${this.baseUrl}/transactions`,
+      transaction,
+      httpOptions
+    );
   }
 
   getAllTransactions = (): Observable<Transaction[]> => {

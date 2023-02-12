@@ -47,7 +47,6 @@ export class DashboardComponent implements OnInit {
       next: (userId: number) => {
         if (userId) {
           this.getUserById(userId);
-          this.getWalletById();
         }
       },
     });
@@ -66,6 +65,7 @@ export class DashboardComponent implements OnInit {
           this.user = response;
           this.getWalletByIdRequest.id = this.user.selectedWalletId;
           this.getWalletByIdRequest.userId = this.user.id;
+          this.getWalletById();
           this.userHelperService.setUser(this.user);
         },
       });

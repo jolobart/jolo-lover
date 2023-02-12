@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
-import { CategoryType } from 'src/app/shared/enums';
 import { UserHelperService } from 'src/app/shared/helper-service';
-import {
-  Category,
-  Transaction,
-  UpsertCategoryRequest,
-} from 'src/app/shared/models';
-import { CategoryService } from 'src/app/shared/services';
+import { WalletHelperService } from 'src/app/shared/helper-service/wallet-helper-service/wallet-helper.service';
+import { Category, Transaction, Wallet } from 'src/app/shared/models';
+import { CategoryService, TransactionService } from 'src/app/shared/services';
 
 @Component({
   selector: 'transaction-form',
@@ -21,10 +17,10 @@ export class TransactionFormComponent {
   transaction: Transaction = {
     userId: 0,
     walletId: 0,
-    amount: 0,
     categoryId: 0,
     notes: '',
     dateTime: '',
+    currency: '',
   };
   category: Category = {
     name: '',
@@ -33,27 +29,54 @@ export class TransactionFormComponent {
   selectedCategoryId: number;
   userId: number = 0;
   categories: Category[] = [];
-  upsertCategoryRequest: UpsertCategoryRequest = {
-    id: 0,
-    userId: 0,
-    name: '',
-    type: '',
-  };
+  isCurrency: boolean = false;
 
   constructor(
     private categoryService: CategoryService,
     private userHelperService: UserHelperService,
-    private toastr: ToastrService
+    private transactionService: TransactionService,
+    private toastr: ToastrService,
+    private walletHelperService: WalletHelperService
   ) {
     this.userHelperService.getUserId().subscribe({
       next: (userId: number) => {
         if (userId) {
           this.userId = userId;
+          this.transaction.userId = userId;
           this.getAllCategories(userId);
         }
       },
     });
+
+    this.walletHelperService.getWallet().subscribe({
+      next: (response: Wallet) => {
+        if (response) {
+          this.transaction.walletId = response.id as number;
+        }
+      },
+    });
   }
+
+  upsertTransaction = (): void => {
+    this.isLoading = true;
+    this.transaction.dateTime = new Date(
+      this.transaction.dateTime as Date
+    ).getTime();
+
+    this.transactionService
+      .upsertTransaction(this.transaction)
+      .pipe(take(1))
+      .subscribe({
+        next: (response: Transaction) => {
+          this.toastr.success(`Transaction added`, 'Success!');
+          this.isLoading = false;
+        },
+        error: () => {
+          this.toastr.error('Add transaction unsuccessful', 'Error!');
+          this.isLoading = false;
+        },
+      });
+  };
 
   upsertCategory = (): void => {
     this.isLoading = true;
@@ -67,6 +90,10 @@ export class TransactionFormComponent {
           this.getAllCategories(this.userId);
           this.isLoading = false;
           this.isAddCategory = false;
+        },
+        error: () => {
+          this.toastr.error('Add category unsuccessful', 'Error!');
+          this.isLoading = false;
         },
       });
   };
@@ -105,6 +132,7 @@ export class TransactionFormComponent {
 
   selectCategory = (category: Category): void => {
     this.category = category;
+    this.transaction.categoryId = category.id as number;
   };
 
   removeCategory = (category: Category): void => {
@@ -121,5 +149,10 @@ export class TransactionFormComponent {
 
   filterCategory = (id: number): void => {
     this.categories = this.categories.filter((category) => category.id != id);
+  };
+
+  selectCurrency = (currency: string): void => {
+    this.transaction.currency = currency;
+    this.isCurrency = true;
   };
 }

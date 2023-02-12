@@ -11,10 +11,13 @@ import { CategoryService } from 'src/app/shared/services';
 export class TransactionListComponent {
   @Input() transactions: Transaction[] = [];
   category: Category;
+  currentDate: Date = new Date(Date.now());
 
   constructor(private categoryService: CategoryService) {}
 
-  openTransactionDetails = (): void => {};
+  openTransactionDetails = (): void => {
+
+  };
 
   // getTransactionCategory = (id: number): void => {
   //   this.categoryService.getCategoryById(id).subscribe((response: Category) => {
