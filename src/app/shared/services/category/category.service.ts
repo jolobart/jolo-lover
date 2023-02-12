@@ -1,7 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category, UpsertCategoryRequest } from '../../models';
+import {
+  Category,
+  GetCategoryRequest,
+  UpsertCategoryRequest,
+} from '../../models';
 import { environment } from '../../../../../environment';
 const httpOptions = {
   headers: new HttpHeaders({
@@ -32,6 +36,14 @@ export class CategoryService {
   removeCategory(id: number): Observable<Category> {
     return this.http.delete<Category>(
       `${this.baseUrl}/categories/${id}`,
+      httpOptions
+    );
+  }
+
+  getCategoryById(request: GetCategoryRequest): Observable<Category> {
+    return this.http.post<Category>(
+      `${this.baseUrl}/categories/${request.id}`,
+      request,
       httpOptions
     );
   }

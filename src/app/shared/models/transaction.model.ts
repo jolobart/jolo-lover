@@ -8,3 +8,9 @@ export interface Transaction {
     dateTime?: Date | string | number;
     currency: string;
 }
+
+export interface GetAllTransactionRequest {
+    userId: number;
+    walletId: number;
+}
+

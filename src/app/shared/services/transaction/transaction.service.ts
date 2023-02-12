@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environment';
 import { Observable } from 'rxjs';
-import { Transaction } from '../../models';
+import { GetAllTransactionRequest, Transaction } from '../../models';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -26,8 +26,14 @@ export class TransactionService {
     );
   }
 
-  getAllTransactions = (): Observable<Transaction[]> => {
-    return this.http.get<Transaction[]>(`${this.baseUrl}`, httpOptions);
+  getAllTransactions = (
+    request: GetAllTransactionRequest
+  ): Observable<Transaction[]> => {
+    return this.http.post<Transaction[]>(
+      `${this.baseUrl}/transactions/list`,
+      request,
+      httpOptions
+    );
   };
 
   getTransactionById(id: number): Observable<Transaction> {

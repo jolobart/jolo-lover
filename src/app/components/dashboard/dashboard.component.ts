@@ -5,6 +5,7 @@ import { ComponentType } from 'src/app/shared/enums';
 import { UserHelperService } from 'src/app/shared/helper-service';
 import { WalletHelperService } from 'src/app/shared/helper-service/wallet-helper-service/wallet-helper.service';
 import {
+  GetAllTransactionRequest,
   GetWalletByIdRequest,
   ModalWrapperDetails,
   Transaction,
@@ -35,6 +36,10 @@ export class DashboardComponent implements OnInit {
     id: 0,
     userId: 0,
   };
+  getAllTransactionRequest: GetAllTransactionRequest = {
+    userId: 0,
+    walletId: 0,
+  };
 
   constructor(
     private userHelperService: UserHelperService,
@@ -46,14 +51,23 @@ export class DashboardComponent implements OnInit {
     this.userHelperService.getUserId().subscribe({
       next: (userId: number) => {
         if (userId) {
+          this.getAllTransactionRequest.userId = userId;
           this.getUserById(userId);
+        }
+      },
+    });
+
+    this.walletHelperService.getWallet().subscribe({
+      next: (wallet: Wallet) => {
+        if (wallet) {
+          this.getAllTransactionRequest.walletId = wallet.id as number;
         }
       },
     });
   }
 
   ngOnInit(): void {
-    // this.getAllTransaction();
+    this.getAllTransaction();
   }
 
   getUserById = (id: number): void => {
@@ -84,7 +98,7 @@ export class DashboardComponent implements OnInit {
 
   getAllTransaction = (): void => {
     this.transactionService
-      .getAllTransactions()
+      .getAllTransactions(this.getAllTransactionRequest)
       .subscribe((transactionList) => {
         this.transactionList = transactionList;
       });

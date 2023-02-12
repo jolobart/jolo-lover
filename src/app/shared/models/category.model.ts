@@ -2,7 +2,7 @@ import { CategoryType } from '../enums';
 
 export interface Category {
   id?: number;
-  name: string;
+  name?: string;
   type?: CategoryType | string;
   userId?: number;
 }
@@ -12,4 +12,9 @@ export interface UpsertCategoryRequest {
   userId: number;
   name: string;
   type?: CategoryType | string;
+}
+
+export interface GetCategoryRequest {
+  id: number;
+  userId: number;
 }
