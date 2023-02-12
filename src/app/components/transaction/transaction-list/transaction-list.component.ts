@@ -16,9 +16,9 @@ export class TransactionListComponent {
 
   openTransactionDetails = (): void => {};
 
-  getTransactionCategory = (id: number): void => {
-    this.categoryService.getCategoryById(id).subscribe((response: Category) => {
-      this.category = response;
-    });
-  };
+  // getTransactionCategory = (id: number): void => {
+  //   this.categoryService.getCategoryById(id).subscribe((response: Category) => {
+  //     this.category = response;
+  //   });
+  // };
 }

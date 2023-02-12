@@ -1,109 +1,179 @@
-<div class="p-4 mb-3">
-  <div class="row">
-    <form>
-      <div ngbDropdown class="input-group mb-4">
-        <button
-          ngbDropdownToggle
-          class="btn btn-warning dropdown-toggle text-light"
-          id="dropdownBasic1"
-          type="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false"
-        >
-          PHP
-        </button>
-        <ul
-          ngbDropdownMenu
-          class="dropdown-menu"
-          aria-labelledby="dropdownBasic1"
-        >
-          <li><a ngbDropdownItem class="dropdown-item" href="#">USD</a></li>
-          <li><a ngbDropdownItem class="dropdown-item" href="#">PHP</a></li>
-        </ul>
-        <input
-          type="number"
-          class="form-control"
-          aria-label="Text input with dropdown button"
-          placeholder="Amount"
-        />
-      </div>
-      <div class="mb-4">
-        <div ngbDropdown class="dropdown">
+<ng-container *ngIf="!isAddCategory; else AddCategoryButton">
+  <div class="p-4 mb-3">
+    <div class="row">
+      <form #transactionForm="ngForm">
+        <div ngbDropdown class="input-group mb-4">
           <button
             ngbDropdownToggle
             class="btn btn-warning dropdown-toggle text-light"
-            id="dropdownBasic2"
+            id="dropdownBasic1"
             type="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            Select category
+            PHP
           </button>
           <ul
             ngbDropdownMenu
             class="dropdown-menu"
-            aria-labelledby="dropdownBasic2"
+            aria-labelledby="dropdownBasic1"
           >
-            <li>
-              <a ngbDropdownItem class="dropdown-item" href="#"
-                >Transportation</a
-              >
-            </li>
-            <li>
-              <a ngbDropdownItem class="dropdown-item" href="#"
-                >Food & Beverage</a
-              >
-            </li>
-            <li><a ngbDropdownItem class="dropdown-item" href="#">Bills</a></li>
+            <li><a ngbDropdownItem class="dropdown-item" href="#">USD</a></li>
+            <li><a ngbDropdownItem class="dropdown-item" href="#">PHP</a></li>
           </ul>
-        </div>
-      </div>
-      <div class="mb-4">
-        <div class="form-floating">
-          <textarea
+          <input
+            type="number"
             class="form-control"
-            placeholder="Leave a comment here"
-            id="floatingTextarea2"
-            style="height: 100px"
-          ></textarea>
-          <label for="floatingTextarea2">Notes</label>
+            aria-label="Text input with dropdown button"
+            placeholder="Amount"
+          />
         </div>
-      </div>
-      <div class="mb-4">
-        <input type="date" class="form-control" id="date" />
-      </div>
-      <div class="mb-4">
-        <div ngbDropdown class="dropdown">
-          <button
-            ngbDropdownToggle
-            class="btn btn-warning dropdown-toggle text-light"
-            id="dropdownBasic3"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Select wallet
-          </button>
-          <ul
-            ngbDropdownMenu
-            class="dropdown-menu"
-            aria-labelledby="dropdownBasic3"
-          >
-            <li>
-              <a ngbDropdownItem class="dropdown-item" href="#">Wallet 1</a>
-            </li>
-            <li>
-              <a ngbDropdownItem class="dropdown-item" href="#">Wallet 2</a>
-            </li>
-          </ul>
+        <div class="mb-4">
+          <div class="row">
+            <div class="col d-flex justify-content-start align-items-center">
+              <div ngbDropdown class="dropdown">
+                <button
+                  ngbDropdownToggle
+                  class="btn btn-warning dropdown-toggle text-light"
+                  id="dropdownBasic2"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <label *ngIf="category.name">{{ category.name }}</label>
+                  <label *ngIf="!category.name">Select category</label>
+                </button>
+                <ul
+                  ngbDropdownMenu
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownBasic2"
+                >
+                  <li
+                    *ngFor="let category of categories"
+                    class="list-group-item p-2"
+                  >
+                    <ng-container *ngIf="categories; else EmptyCategory">
+                      <div class="row">
+                        <div
+                          class="col-md-6 d-flex align-items-center justify-content-start"
+                        >
+                          <label
+                            class="form-check-label category-name"
+                            (click)="selectCategory(category)"
+                            [for]="category.name"
+                          >
+                            {{ category.name }}
+                          </label>
+                          <i
+                            *ngIf="selectedCategoryId === category.id"
+                            class="bi bi-check-lg"
+                          ></i>
+                        </div>
+                        <div
+                          class="col-md-6 d-flex align-items-center justify-content-end"
+                        >
+                          <button
+                            (click)="viewCategoryDetails(category)"
+                            type="button"
+                            class="btn btn-warning edit-btn"
+                          >
+                            <i class="bi bi-pencil-fill pencil-icon"></i>
+                          </button>
+                          <button
+                            (click)="removeCategory(category)"
+                            class="btn btn-danger"
+                          >
+                            <i class="bi bi-trash3-fill"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-template #EmptyCategory> No Categories </ng-template>
+                  </li>
+                </ul>
+              </div>
+              <button
+                (click)="viewAddCategory()"
+                type="button"
+                class="btn btn-primary-outline btn-add-category border-0"
+              >
+                <i class="bi bi-plus-circle-fill btn-add"></i>
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12 d-flex align-items-center justify-content-end">
-          <!-- <button class="btn btn-danger">Cancel</button> -->
-          <button type="submit" class="btn btn-primary">Save</button>
+        <div class="mb-4">
+          <div class="form-floating">
+            <textarea
+              class="form-control"
+              placeholder="Leave a comment here"
+              id="floatingTextarea2"
+              style="height: 100px"
+            ></textarea>
+            <label for="floatingTextarea2">Notes</label>
+          </div>
         </div>
-      </div>
-    </form>
+        <div class="mb-4">
+          <input type="date" class="form-control" id="date" />
+        </div>
+        <div class="row">
+          <div class="col-md-12 d-flex align-items-center justify-content-end">
+            <!-- <button class="btn btn-danger">Cancel</button> -->
+            <button type="submit" class="btn btn-success w-100">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
-</div>
+</ng-container>
+<ng-template #AddCategoryButton>
+  <div class="p-4 mb-3">
+    <div class="row">
+      <form #addCategoryForm="ngForm">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          class="form-control mb-4"
+          placeholder="Category Name"
+          [(ngModel)]="category.name"
+          required
+        />
+
+        <select
+          name="type"
+          id="type"
+          class="form-select mb-4"
+          [(ngModel)]="category.type"
+          required
+        >
+          <option value="" disabled selected>Select category type</option>
+          <option value="expense">Expense</option>
+          <option value="income">Income</option>
+        </select>
+
+        <div class="row">
+          <div class="col-md-12 d-flex align-items-center justify-content-end">
+            <button
+              (click)="cancelCategory()"
+              class="btn btn-danger cancel-btn"
+            >
+              Cancel
+            </button>
+            <button
+              (click)="upsertCategory()"
+              type="submit"
+              class="btn btn-success"
+              [disabled]="addCategoryForm.invalid || isLoading"
+            >
+              <ng-container *ngIf="isLoading; else showButton">
+                <app-spinner></app-spinner>
+              </ng-container>
+              <ng-template #showButton>Save</ng-template>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>

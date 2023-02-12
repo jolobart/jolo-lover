@@ -1,0 +1,29 @@
+.btn-add-category {
+  margin-left: 0.5rem;
+  margin-bottom: 0.1rem;
+  border-radius: 60px;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-add {
+  font-size: 1.5rem;
+  color: rgb(25, 135, 84);
+  font-weight: bolder;
+}
+
+.cancel-btn {
+  margin-right: 0.5rem;
+}
+
+.dropdown-menu {
+  width: 430px !important;
+  // height: 400px !important;
+}
+
+.edit-btn {
+  margin-right: 0.5rem;
+}

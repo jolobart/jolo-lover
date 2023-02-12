@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category } from '../../models';
-
+import { Category, UpsertCategoryRequest } from '../../models';
+import { environment } from '../../../../../environment';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -13,11 +13,26 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class CategoryService {
-  baseUrl: string = 'http://localhost:5000/categories';
+  baseUrl: string = environment.apiUrl;
+
   constructor(private http: HttpClient) {}
 
-  getCategoryById(id: number): Observable<Category> {
-    const url = `${this.baseUrl}/${id}`;
-    return this.http.get<Category>(url);
+  getAllCategoryById(id: number): Observable<Category[]> {
+    return this.http.get<Category[]>(`${this.baseUrl}/categories/${id}`);
+  }
+
+  upsertCategory(request: Category): Observable<Category> {
+    return this.http.post<Category>(
+      `${this.baseUrl}/categories`,
+      request,
+      httpOptions
+    );
+  }
+
+  removeCategory(id: number): Observable<Category> {
+    return this.http.delete<Category>(
+      `${this.baseUrl}/categories/${id}`,
+      httpOptions
+    );
   }
 }
